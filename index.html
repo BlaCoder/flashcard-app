@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <title>Hanzi Cards · Mobile</title>
+  <meta name="description" content="App de cartões para estudar ideogramas do chinês (Hanzi)"> 
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>Hanzi Cards</h1>
+    <button id="btnExport" class="icon-btn" title="Exportar JSON" aria-label="Exportar JSON">📤</button>
+  </header>
+
+  <main id="viewLists" class="view active" role="region" aria-label="Listas de estudo">
+    <section class="toolbar">
+      <input id="searchList" class="input" placeholder="Buscar lista…" aria-label="Buscar lista" />
+      <button id="btnNewList" class="btn primary">+ Nova lista</button>
+      <input id="fileImport" type="file" accept="application/json" hidden />
+      <button id="btnImport" class="btn ghost">Importar</button>
+    </section>
+
+    <ul id="lists" class="card-list" aria-live="polite"></ul>
+
+    <p class="tip">Dica: toque em uma lista para começar a estudar imediatamente.</p>
+  </main>
+
+  <main id="viewEdit" class="view" role="region" aria-label="Editor de lista">
+    <nav class="subheader">
+      <button id="backToLists" class="icon-btn" aria-label="Voltar">←</button>
+      <h2 id="editTitle">Editar lista</h2>
+      <span></span>
+    </nav>
+
+    <section class="editor">
+      <label class="label">Nome da lista
+        <input id="listName" class="input" maxlength="80" placeholder="Ex.: HSK 1 — básicos" />
+      </label>
+
+      <details class="details">
+        <summary>Adicionar cartão</summary>
+        <div class="grid">
+          <label class="label">Hanzi (ideograma)
+            <input id="cardHanzi" class="input hanzi" placeholder="你" />
+          </label>
+          <label class="label">Pinyin
+            <input id="cardPinyin" class="input" placeholder="nǐ" />
+          </label>
+          <label class="label">Significado
+            <input id="cardMeaning" class="input" placeholder="você" />
+          </label>
+          <label class="label">Alternativas (opcional)
+            <input id="cardAlt" class="input" placeholder="你,妳 (se aceitar variações)" />
+          </label>
+          <label class="label">Frases de exemplo (uma por linha)
+            <textarea id="cardExamples" class="input" rows="3" placeholder="你好！\n我认识你。"></textarea>
+          </label>
+          <button id="btnAddCard" class="btn primary">Adicionar cartão</button>
+        </div>
+      </details>
+
+      <ul id="cards" class="card-list compact"></ul>
+
+      <div class="editor-actions">
+        <button id="btnDeleteList" class="btn danger">Remover lista</button>
+        <button id="btnStartStudy" class="btn success">Iniciar estudo ▶</button>
+      </div>
+    </section>
+  </main>
+
+  <main id="viewStudy" class="view" role="region" aria-label="Estudo">
+    <nav class="subheader">
+      <button id="backToEdit" class="icon-btn" aria-label="Voltar">←</button>
+      <h2 id="studyTitle">Estudo</h2>
+      <div class="switches">
+        <label class="switch"><input type="checkbox" id="optShuffle" checked><span>Embaralhar</span></label>
+        <label class="switch"><input type="checkbox" id="optLoop"><span>Repetir</span></label>
+      </div>
+    </nav>
+
+    <section class="study-area">
+      <div class="hanzi-box" aria-live="polite">
+        <div id="hanziChar" class="hanzi">好</div>
+        <div id="assist" class="assist hidden"><span id="pinyin">hǎo</span> · <span id="meaning">bom</span></div>
+      </div>
+
+      <div id="examples" class="examples"></div>
+
+      <form id="answerForm" class="answer">
+        <input id="answerInput" class="input hanzi" inputmode="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Digite o ideograma aqui…" aria-label="Resposta" />
+        <button class="btn primary" type="submit">Conferir</button>
+      </form>
+
+      <div class="study-actions">
+        <button id="btnReveal" class="btn ghost">Mostrar dica</button>
+        <button id="btnSkip" class="btn ghost">Pular</button>
+      </div>
+
+      <div id="progress" class="progress">0 / 0</div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
